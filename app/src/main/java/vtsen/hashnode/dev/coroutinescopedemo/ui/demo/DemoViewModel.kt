@@ -15,6 +15,11 @@ class DemoViewModel : ViewModel() {
     var job: Job? = null
     var text by mutableStateOf("")
 
+    override fun onCleared() {
+        super.onCleared()
+        Log.d(tag, "[ViewModel]: destroyed")
+    }
+
     fun launchCoroutine(coroutineScope: CoroutineScope, info: String) {
         job?.cancel()
         job = coroutineScope.launch {

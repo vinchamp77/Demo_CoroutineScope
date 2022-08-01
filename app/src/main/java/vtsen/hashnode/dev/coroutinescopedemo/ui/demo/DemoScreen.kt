@@ -4,12 +4,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import vtsen.hashnode.dev.coroutinescopedemo.ui.common.tag
 
@@ -21,6 +24,7 @@ fun DemoScreen() {
 
     val lifeCycleScope = LocalLifecycleOwner.current.lifecycleScope
     val rememberCoroutineScope = rememberCoroutineScope()
+    val localCoroutineScope = remember { CoroutineScope(Dispatchers.Main) }
 
     Column {
         TextWidget(title = "[Text]", text = viewModel.text , tag = tag)
@@ -49,6 +53,13 @@ fun DemoScreen() {
 
         }) {
             Text("rememberCoroutineScope.launch()")
+        }
+
+        Button(onClick = {
+            viewModel.launchCoroutine(localCoroutineScope, "localCoroutineScope")
+
+        }) {
+            Text("localCoroutineScope.launch()")
         }
     }
 
