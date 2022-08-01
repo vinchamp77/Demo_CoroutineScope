@@ -22,6 +22,10 @@ class MainActivity : ComponentActivity() {
     override fun onDestroy() {
         super.onDestroy()
         Log.d(tag, "Activity onDestroy() called")
+
+        if(isFinishing) {
+            Log.d(tag, "Activity is finishing!")
+        }
     }
 }
 
