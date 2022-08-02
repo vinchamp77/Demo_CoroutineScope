@@ -45,10 +45,35 @@ fun DemoScreen() {
         }
 
         Button(onClick = {
+            viewModel.launchWhenCreated(lifeCycleScope, "launchWhenCreated")
+        }) {
+            Text("lifeCycleScope.launchWhenCreated()")
+        }
+
+        Button(onClick = {
+            viewModel.launchWhenStarted(lifeCycleScope, "launchWhenStarted")
+        }) {
+            Text("lifeCycleScope.launchWhenStarted()")
+        }
+
+        Button(onClick = {
+            viewModel.launchWhenResumed(lifeCycleScope, "launchWhenResumed")
+        }) {
+            Text("lifeCycleScope.launchWhenResumed()")
+        }
+
+        Button(onClick = {
             viewModel.launchCoroutine(rememberCoroutineScope, "rememberCoroutineScope")
 
         }) {
             Text("rememberCoroutineScope.launch()")
+        }
+
+        Button(onClick = {
+            viewModel.launchCoroutineNonCancellable(rememberCoroutineScope, "rememberCoroutineScopeNonCancellable")
+
+        }) {
+            Text("rememberCoroutineScope.launch() - non-cancel;able coroutine")
         }
 
         Button(onClick = {
