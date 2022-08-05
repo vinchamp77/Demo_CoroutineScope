@@ -18,7 +18,7 @@ import vtsen.hashnode.dev.coroutinescopedemo.ui.common.tag
 fun DemoScreen() {
 
     val viewModel:DemoViewModel = viewModel()
-
+    val lifeCycle = LocalLifecycleOwner.current.lifecycle
     val lifeCycleScope = LocalLifecycleOwner.current.lifecycleScope
     val rememberCoroutineScope = rememberCoroutineScope()
 
@@ -63,6 +63,15 @@ fun DemoScreen() {
         }
 
         Button(onClick = {
+            viewModel.repeatOnLifecycle(
+                lifeCycleScope,
+                lifeCycle,
+                "repeatOnLifecycle(Lifecycle.State.STARTED)")
+        }) {
+            Text("repeatOnLifecycle(Lifecycle.State.STARTED)")
+        }
+
+        Button(onClick = {
             viewModel.launchCoroutine(rememberCoroutineScope, "rememberCoroutineScope")
 
         }) {
@@ -73,7 +82,7 @@ fun DemoScreen() {
             viewModel.launchCoroutineNonCancellable(rememberCoroutineScope, "rememberCoroutineScopeNonCancellable")
 
         }) {
-            Text("rememberCoroutineScope.launch() - non-cancel;able coroutine")
+            Text("rememberCoroutineScope.launch() - non-cancellable coroutine")
         }
 
         Button(onClick = {

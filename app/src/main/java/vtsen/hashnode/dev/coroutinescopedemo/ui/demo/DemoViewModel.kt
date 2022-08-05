@@ -4,8 +4,10 @@ import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.*
 import vtsen.hashnode.dev.coroutinescopedemo.ui.common.tag
 import java.lang.Thread.sleep
@@ -53,6 +55,19 @@ class DemoViewModel: ViewModel() {
         job?.cancel()
         job = lifeCycleScope.launchWhenResumed {
             simulateCoroutineTask(info)
+        }
+    }
+
+    fun repeatOnLifecycle(
+        lifeCycleScope: LifecycleCoroutineScope,
+        lifeCycle: Lifecycle,
+        info: String) {
+
+        job?.cancel()
+        job = lifeCycleScope.launch {
+            lifeCycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                simulateCoroutineTask(info)
+            }
         }
     }
 
